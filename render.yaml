@@ -1,0 +1,63 @@
+# Render Blueprint — JKmall Deployment
+# Deploy: Connect GitHub repo → "New Blueprint Instance" → Select render.yaml
+
+services:
+  # Backend API + serves frontend static files
+  - type: web
+    name: jkmall-api
+    runtime: node
+    plan: free
+    buildCommand: cd backend && npm install && cd ../frontend && npm install && npm run build
+    startCommand: cd backend && node src/index.js
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: "5000"
+      - key: JWT_SECRET
+        generateValue: true
+      - key: JWT_EXPIRES_IN
+        value: 7d
+      - key: FRONTEND_URL
+        value: https://jkmall-api.onrender.com
+      - key: DB_HOST
+        fromDatabase:
+          name: jkmall-db
+          property: host
+      - key: DB_PORT
+        fromDatabase:
+          name: jkmall-db
+          property: port
+      - key: DB_NAME
+        fromDatabase:
+          name: jkmall-db
+          property: database
+      - key: DB_USER
+        fromDatabase:
+          name: jkmall-db
+          property: user
+      - key: DB_PASSWORD
+        fromDatabase:
+          name: jkmall-db
+          property: password
+      - key: MPESA_CONSUMER_KEY
+        sync: false
+      - key: MPESA_CONSUMER_SECRET
+        sync: false
+      - key: MPESA_SHORTCODE
+        value: "174379"
+      - key: MPESA_PASSKEY
+        sync: false
+      - key: MPESA_CALLBACK_URL
+        sync: false
+      - key: MPESA_ENV
+        value: sandbox
+    disk:
+      name: uploads
+      mountPath: /opt/render/project/src/backend/uploads
+      sizeGB: 1
+
+databases:
+  - name: jkmall-db
+    plan: free
+    databaseName: jkmall
