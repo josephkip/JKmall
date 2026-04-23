@@ -2,7 +2,7 @@
 
 A full-stack e-commerce web application tailored for the Kenyan market with **M-Pesa payments** and **boda-boda delivery tracking**.
 
-[![GitHub Repo](https://img.shields.io/badge/GitHub-joekip/JKmall-green?logo=github)](https://github.com/joekip/JKmall)
+[![GitHub Repo](https://img.shields.io/badge/GitHub-josephkip/JKmall-green?logo=github)](https://github.com/josephkip/JKmall)
 
 ## 🚀 Features
 
