@@ -127,7 +127,7 @@ const start = async () => {
     await sequelize.sync();
     console.log('✅ Database synced');
 
-    server.listen(PORT, () => {
+    server.listen(PORT, '0.0.0.0', () => {
       console.log(`🚀 JKmall API running on port ${PORT}`);
       console.log(`📦 Environment: ${process.env.NODE_ENV}`);
     });
