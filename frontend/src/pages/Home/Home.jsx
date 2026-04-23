@@ -93,7 +93,7 @@ const Home = () => {
                   <Link to={`/product/${p.id}`}>
                     <div className="carousel-img-wrap">
                       {p.images?.[0] ? (
-                        <img src={`${apiBase}${p.images[0]}`} alt={p.name} />
+                        <img src={p.images[0].startsWith('http') ? p.images[0] : `${apiBase}${p.images[0]}`} alt={p.name} />
                       ) : (
                         <div className="carousel-placeholder"><ShoppingCart size={30} /></div>
                       )}

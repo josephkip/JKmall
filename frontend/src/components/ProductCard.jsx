@@ -5,7 +5,9 @@ import { ShoppingCart, Heart, Eye } from 'lucide-react';
 
 const ProductCard = ({ product }) => {
   const { addItem } = useCart();
-  const imageUrl = product.images?.[0] ? `${import.meta.env.VITE_API_URL || ''}${product.images[0]}` : '/placeholder-product.png';
+  const imageUrl = product.images?.[0] 
+    ? (product.images[0].startsWith('http') ? product.images[0] : `${import.meta.env.VITE_API_URL || ''}${product.images[0]}`)
+    : '/placeholder-product.png';
 
   return (
     <div className="card product-card fade-in">

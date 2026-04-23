@@ -31,13 +31,13 @@ const ProductDetail = () => {
       <div className="detail-grid">
         <div className="images-section">
           <div className="main-image">
-            <img src={`${apiBase}${images[selectedImage]}`} alt={product.name} />
+            <img src={images[selectedImage].startsWith('http') ? images[selectedImage] : `${apiBase}${images[selectedImage]}`} alt={product.name} />
             {discount > 0 && <span className="discount-badge">-{discount}%</span>}
           </div>
           {images.length > 1 && (
             <div className="thumbnails">
               {images.map((img, i) => (
-                <img key={i} src={`${apiBase}${img}`} alt="" className={i === selectedImage ? 'active' : ''} onClick={() => setSelectedImage(i)} />
+                <img key={i} src={img.startsWith('http') ? img : `${apiBase}${img}`} alt="" className={i === selectedImage ? 'active' : ''} onClick={() => setSelectedImage(i)} />
               ))}
             </div>
           )}

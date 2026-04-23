@@ -90,7 +90,7 @@ exports.createProduct = async (req, res, next) => {
       return res.status(400).json({ success: false, message: 'Name and price are required' });
     }
 
-    const images = req.files ? req.files.map((f) => `/uploads/${f.filename}`) : [];
+    const images = req.files ? req.files.map((f) => f.path.startsWith('http') ? f.path : `/uploads/${f.filename}`) : [];
 
     const product = await Product.create({
       name,
@@ -136,13 +136,15 @@ exports.updateProduct = async (req, res, next) => {
     if (remove_images) {
       const toRemove = JSON.parse(remove_images);
       toRemove.forEach((imgPath) => {
-        const fullPath = path.join(__dirname, '../../', imgPath);
-        if (fs.existsSync(fullPath)) fs.unlinkSync(fullPath);
+        if (!imgPath.startsWith('http')) {
+          const fullPath = path.join(__dirname, '../../', imgPath);
+          if (fs.existsSync(fullPath)) fs.unlinkSync(fullPath);
+        }
       });
       currentImages = currentImages.filter((img) => !toRemove.includes(img));
     }
     if (req.files && req.files.length > 0) {
-      const newImages = req.files.map((f) => `/uploads/${f.filename}`);
+      const newImages = req.files.map((f) => f.path.startsWith('http') ? f.path : `/uploads/${f.filename}`);
       currentImages = [...currentImages, ...newImages];
     }
     updates.images = currentImages;

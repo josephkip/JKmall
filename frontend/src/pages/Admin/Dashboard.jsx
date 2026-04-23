@@ -167,7 +167,7 @@ const Dashboard = () => {
                   <tbody>{products.map(p => (
                     <tr key={p.id}>
                       <td style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-                        {p.images?.[0] ? <img src={`${apiBase}${p.images[0]}`} alt="" className="product-thumb" /> : <div className="product-thumb-empty"><Image size={16}/></div>}
+                        {p.images?.[0] ? <img src={p.images[0].startsWith('http') ? p.images[0] : `${apiBase}${p.images[0]}`} alt="" className="product-thumb" /> : <div className="product-thumb-empty"><Image size={16}/></div>}
                         <span style={{ fontWeight: 600 }}>{p.name}</span>
                       </td>
                       <td>KES {parseFloat(p.price).toLocaleString()}</td>
@@ -213,7 +213,7 @@ const Dashboard = () => {
                             <div className="image-grid">
                               {existingImages.map((img, i) => (
                                 <div key={`ex-${i}`} className="image-thumb">
-                                  <img src={`${apiBase}${img}`} alt="" />
+                                  <img src={img.startsWith('http') ? img : `${apiBase}${img}`} alt="" />
                                   <button type="button" onClick={() => removeExistingImage(img)} className="remove-img"><X size={14} /></button>
                                 </div>
                               ))}
